@@ -1,4 +1,4 @@
--- 1. Update Fluffy's information in the petPet table (if needed).
+-- first update fluffy's info in the petPet table.
 UPDATE petPet
 SET owner = 'Alice',
     species = 'cat',
@@ -7,14 +7,14 @@ SET owner = 'Alice',
     death = NULL
 WHERE petname = 'Fluffy';
 
--- Now insert or update the event for Fluffy (no need to update events if they already exist).
-INSERT INTO petEvent (petname, eventdate, eventtype, remark)
-VALUES ('Fluffy', '2020-10-15', 'vet', 'antibiotics')
-ON DUPLICATE KEY UPDATE
-    eventtype = VALUES(eventtype),
-    remark = VALUES(remark);
+-- update fluffy's event for the vet visit on 2020-10-15 (if existing).
+UPDATE petEvent
+SET eventtype = 'vet',
+    remark = 'antibiotics'
+WHERE petname = 'Fluffy'
+  AND eventdate = '2020-10-15';
 
--- 2. Update Hammy's information in the petPet table (if needed).
+-- update hammy's info in the petPet table.
 UPDATE petPet
 SET owner = 'Diane',
     species = 'hamster',
@@ -23,16 +23,16 @@ SET owner = 'Diane',
     death = NULL
 WHERE petname = 'Hammy';
 
--- Now insert or update the event for Hammy.
-INSERT INTO petEvent (petname, eventdate, eventtype, remark)
-VALUES ('Hammy', '2020-10-15', 'vet', 'antibiotics')
-ON DUPLICATE KEY UPDATE
-    eventtype = VALUES(eventtype),
-    remark = VALUES(remark);
+-- update hammy's event for the vet visit on 2020-10-15 (if existing).
+UPDATE petEvent
+SET eventtype = 'vet',
+    remark = 'antibiotics'
+WHERE petname = 'Hammy'
+  AND eventdate = '2020-10-15';
 
--- 3. No specific update for Fluffy’s kittens, so no changes to be made.
+-- no specific update for fluffy’s kittens, so no changes to be made here.
 
--- 4. Update Claws's information in the petPet table (if needed).
+-- update claws's information in the petPet table.
 UPDATE petPet
 SET owner = 'John',
     species = 'cat',
@@ -41,18 +41,17 @@ SET owner = 'John',
     death = NULL
 WHERE petname = 'Claws';
 
--- Now insert or update the event for Claws.
-INSERT INTO petEvent (petname, eventdate, eventtype, remark)
-VALUES ('Claws', '1997-08-03', 'injury', 'broke rib')
-ON DUPLICATE KEY UPDATE
-    eventtype = VALUES(eventtype),
-    remark = VALUES(remark);
+-- update claws's event for injury on 1997-08-03 (if exists).
+UPDATE petEvent
+SET eventtype = 'injury',
+    remark = 'broke rib'
+WHERE petname = 'Claws'
+  AND eventdate = '1997-08-03';
 
--- 5. Update the death date of Puffball in the petPet table.
+-- update the death date of puffball in the petPet table.
 UPDATE petPet
 SET death = '2020-09-01'
 WHERE petname = 'Puffball';
 
--- 6. Remove Fido from the database due to GDPR.
+-- remove fido from the database due to GDPR.
 DELETE FROM petPet WHERE petname = 'Fido';
-
